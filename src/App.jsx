@@ -10,7 +10,7 @@ const App = () => {
 
   useEffect(() => {
     const getData = async () => {
-      let response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Alert`)
+      let response = await fetch(`http://localhost:3000/?city=${city}`)
       let data = await response.json();
       console.log(data)
 
