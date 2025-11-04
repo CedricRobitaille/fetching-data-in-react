@@ -4,6 +4,9 @@ const apiKey = import.meta.env.VITE_API_KEY;
 
 const App = () => {
   const [city, setCity] = useState("");
+  const [location, setLocation] = useState("");
+  const [temperature, setTempaterure] = useState("");
+  const [conditions, setConditions] = useState("");
 
   const handleChange = (event) => {
     setCity(event.target.value);
@@ -14,6 +17,10 @@ const App = () => {
     let response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
     let data = await response.json();
     console.log(data)
+
+    setLocation(data.location.name);
+    setTempaterure(data.current.temp_c);
+    setConditions(data.current.condition.text);
   }
 
   return (
@@ -24,6 +31,11 @@ const App = () => {
         <input type="text" name="city" onChange={handleChange} />
         <button type="submit">Get my forecast!</button>
       </form>
+
+      <h1> Here's Your Weather Report:</h1>
+      <p>Location: {location}</p>
+      <p>Temperature: {temperature}</p>
+      <p>Conditions: {conditions}</p>
     </>
   );
 }
