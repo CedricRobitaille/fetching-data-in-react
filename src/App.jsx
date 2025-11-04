@@ -1,5 +1,5 @@
 // src/App.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 const apiKey = import.meta.env.VITE_API_KEY;
 
 const App = () => {
@@ -7,6 +7,19 @@ const App = () => {
   const [location, setLocation] = useState("");
   const [temperature, setTempaterure] = useState("");
   const [conditions, setConditions] = useState("");
+
+  useEffect(() => {
+    const getData = async () => {
+      let response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Alert`)
+      let data = await response.json();
+      console.log(data)
+
+      setLocation(data.location.name);
+      setTempaterure(data.current.temp_c);
+      setConditions(data.current.condition.text);
+    }
+    getData()
+  }, [])
 
   const handleChange = (event) => {
     setCity(event.target.value);
